@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
-/** ICONS (SVG inline: đổi màu theo CSS currentColor) */
 const IconSearch = ({ className = "w-5 h-5" }) => (
     <svg viewBox="0 0 24 24" className={className} aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2">
         <circle cx="11" cy="11" r="7"></circle>
@@ -30,7 +29,6 @@ const IconMenu = ({ className = "w-6 h-6" }) => (
     </svg>
 );
 
-/** helper: xác định tab q đang active trên /products */
 function useActiveQuery() {
     const { pathname, search } = useLocation();
     const isPLP = pathname === "/collections";
@@ -125,13 +123,56 @@ export default function Header() {
 
             {/* DRAWER mobile */}
             <div className={`drawer ${open ? "drawer--open" : ""}`} role="dialog" aria-modal="true">
-                <nav className="drawer__panel">
-                    <Link to="/collections/men" className="drawer__link" onClick={closeDrawer}>Men</Link>
-                    <Link to="/collections/women" className="drawer__link" onClick={closeDrawer}>Women</Link>
-                    <Link to="/collections/unisex" className="drawer__link" onClick={closeDrawer}>Unisex</Link>
-                    <Link to="/collections" className="drawer__link" onClick={closeDrawer}>Collections</Link>
-                    <Link to="/blogs/news" className="drawer__link" onClick={closeDrawer}>News</Link>
-                </nav>
+                <div className="drawer__panel">
+                    {/* Close button */}
+                    <button className="drawer__close" onClick={closeDrawer} aria-label="Close menu">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none">
+                            <path d="M6 6l12 12M18 6l-12 12" />
+                        </svg>
+                    </button>
+
+                    {/* Navigation links - white background */}
+                    <nav className="drawer__nav">
+                        <Link to="/collections/men" className="drawer__link" onClick={closeDrawer}>Men</Link>
+                        <Link to="/collections/women" className="drawer__link" onClick={closeDrawer}>Women</Link>
+                        <Link to="/collections/unisex" className="drawer__link" onClick={closeDrawer}>Unisex</Link>
+                        <Link to="/collections" className="drawer__link" onClick={closeDrawer}>Collections</Link>
+                        <Link to="/blogs/news" className="drawer__link" onClick={closeDrawer}>News</Link>
+                    </nav>
+
+                    {/* Bottom section - gray background */}
+                    <div className="drawer__bottom">
+                        <Link to="/account" className="drawer__login" onClick={closeDrawer}>
+                            <IconUser className="w-5 h-5" />
+                            <span>Log in</span>
+                        </Link>
+
+                        {/* Social icons */}
+                        <div className="drawer__social">
+                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                                <i className="fa-brands fa-twitter"></i>
+                            </a>
+                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                                <i className="fa-brands fa-facebook"></i>
+                            </a>
+                            <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" aria-label="Pinterest">
+                                <i className="fa-brands fa-pinterest"></i>
+                            </a>
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                                <i className="fa-brands fa-instagram"></i>
+                            </a>
+                            <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                                <i className="fa-brands fa-tiktok"></i>
+                            </a>
+                            <a href="https://tumblr.com" target="_blank" rel="noopener noreferrer" aria-label="Tumblr">
+                                <i className="fa-brands fa-tumblr"></i>
+                            </a>
+                            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                                <i className="fa-brands fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <button className="drawer__backdrop" onClick={closeDrawer} aria-label="Close menu" />
             </div>
         </header>
