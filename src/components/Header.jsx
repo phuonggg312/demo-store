@@ -53,14 +53,12 @@ export default function Header() {
         const handleScroll = () => {
             const currentScroll = window.pageYOffset;
             
-            // Hide header when scrolling down, show when scrolling up
             if (currentScroll > lastScroll && currentScroll > 100) {
                 setHidden(true);
             } else {
                 setHidden(false);
             }
             
-            // Add background when scrolled
             setScrolled(currentScroll > 10);
             lastScroll = currentScroll;
         };
@@ -75,7 +73,7 @@ export default function Header() {
     return (
         <header className={`header ${hidden ? 'header--hidden' : ''} ${scrolled ? 'header--scrolled' : ''}`}>
             <div className="header__inner">
-                {/* LEFT: Mobile menu button + Desktop nav */}
+                {/* Mobile menu button + Desktop nav */}
                 <div className="header__left">
                     {/* Mobile menu button */}
                     <button
@@ -97,7 +95,7 @@ export default function Header() {
                     </nav>
                 </div>
 
-                {/* CENTER: logo */}
+                {/* logo */}
                 <Link to="/" className="header__logo" aria-label="DemoStore">
                     <img
                         src="https://demostore.mock.shop/cdn/shop/files/newer.gif?v=1675451764&width=200"
@@ -107,7 +105,7 @@ export default function Header() {
                     />
                 </Link>
 
-                {/* RIGHT: actions */}
+                {/* actions */}
                 <div className="header__actions">
                     <button className="icon-btn" aria-label="Search">
                         <IconSearch />
@@ -121,17 +119,15 @@ export default function Header() {
                 </div>
             </div>
 
-            {/* DRAWER mobile */}
+            {/* DRAWER mobile  */}
             <div className={`drawer ${open ? "drawer--open" : ""}`} role="dialog" aria-modal="true">
                 <div className="drawer__panel">
-                    {/* Close button */}
                     <button className="drawer__close" onClick={closeDrawer} aria-label="Close menu">
                         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none">
                             <path d="M6 6l12 12M18 6l-12 12" />
                         </svg>
                     </button>
 
-                    {/* Navigation links - white background */}
                     <nav className="drawer__nav">
                         <Link to="/collections/men" className="drawer__link" onClick={closeDrawer}>Men</Link>
                         <Link to="/collections/women" className="drawer__link" onClick={closeDrawer}>Women</Link>
@@ -140,16 +136,14 @@ export default function Header() {
                         <Link to="/blogs/news" className="drawer__link" onClick={closeDrawer}>News</Link>
                     </nav>
 
-                    {/* Bottom section - gray background */}
                     <div className="drawer__bottom">
                         <Link to="/account" className="drawer__login" onClick={closeDrawer}>
                             <IconUser className="w-5 h-5" />
                             <span>Log in</span>
                         </Link>
 
-                        {/* Social icons */}
                         <div className="drawer__social">
-                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                            <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                                 <i className="fa-brands fa-twitter"></i>
                             </a>
                             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">

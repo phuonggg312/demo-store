@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.jsx";
-import PLP from "./pages/PLP.jsx";
-import PDP from "./pages/PDP.jsx";
+import PLP from "./pages/Plp.jsx";
+import PDP from "./pages/Pdp.jsx";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 
