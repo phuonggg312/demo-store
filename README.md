@@ -82,3 +82,7 @@ export default {
 ---
 # install React Router
 npm i react-router-dom
+
+# API
+# install graphQL
+npm install graphql graphql-request
