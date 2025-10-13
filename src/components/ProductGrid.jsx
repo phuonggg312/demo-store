@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { request, gql } from "graphql-request";
 
 const PRODUCTS_QUERY = gql`
@@ -8,6 +9,7 @@ const PRODUCTS_QUERY = gql`
         node {
           id
           title
+          handle
           priceRange { minVariantPrice { amount currencyCode } }
           featuredImage { url }
         }
@@ -48,9 +50,9 @@ export default function ProductGrid() {
             const price = p.priceRange?.minVariantPrice;
 
             return (
-              <a
+              <Link
                 key={p.id}
-                href={`/products/${p.title?.toLowerCase()?.replace(/\s+/g, "-")}`}
+                to={`/products/${p.handle}`}
                 className="block overflow-hidden"
               >
                 <div className="aspect-square bg-gray-200 overflow-hidden">
@@ -74,7 +76,7 @@ export default function ProductGrid() {
                     </p>
                   )}
                 </div>
-              </a>
+              </Link>
             );
           })}
         </div>

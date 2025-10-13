@@ -40,7 +40,7 @@ export default function HeroBanner() {
             className="
               mt-8 inline-block
               px-8 py-3
-              border-2 border-black
+              border border-black
               text-black
               font-medium
               transition-all duration-300

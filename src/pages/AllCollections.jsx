@@ -1,4 +1,3 @@
-// src/pages/AllCollections.jsx
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { request, gql } from "graphql-request";
@@ -28,7 +27,7 @@ export default function AllCollections() {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        request(API, QUERY, { first: 12, after: null })
+        request(API, QUERY, { first: 8, after: null })
             .then((data) => {
                 const list = (data.collections?.edges || []).map(e => e.node);
                 setItems(list);
@@ -47,29 +46,19 @@ export default function AllCollections() {
                     {items.map(c => (
                         <Link key={c.id} to={`/collections/${c.handle}`} className="block group relative">
                             <div className="aspect-square bg-[#efefef] rounded-lg overflow-hidden">
-                                {c.image?.url ? (
                                     <img
                                         src={c.image.url}
                                         alt={c.title}
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                                         loading="lazy"
                                     />
-                                ) : (
-                                    <div className="w-full h-full grid place-items-center text-gray-400">
-                                        No image
-                                    </div>
-                                )}
+
                             </div>
-                            <h3 className="mt-3 text-xl font-semibold text-gray-900">{c.title}</h3>
-                            <span
-                                className="
-                                         absolute               
-                                        text-gray-900    
-                                         "
-                              
-                            >
-                                <IconArrowRight />
-                            </span>
+                            <div className="mt-3 flex items-center gap-2 text-xl font-semibold text-gray-900">
+                                <h3>{c.title}</h3>
+                                <IconArrowRight className="w-4 h-4" aria-hidden="true" />
+                            </div>
+
                         </Link>
                     ))}
                 </div>

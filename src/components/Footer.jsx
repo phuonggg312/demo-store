@@ -81,13 +81,13 @@ export default function Footer() {
 
           <p className="text-sm md:text-base text-white/80 mb-6">Follow us on social media</p>
           <div className="flex items-center justify-center gap-4 md:gap-6">
-            <a href="#" className="text-white hover:text-white/70" aria-label="Twitter"><IconTwitter /></a>
-            <a href="#" className="text-white hover:text-white/70" aria-label="Facebook"><IconFacebook /></a>
-            <a href="#" className="text-white hover:text-white/70" aria-label="Pinterest"><IconPinterest /></a>
-            <a href="#" className="text-white hover:text-white/70" aria-label="Instagram"><IconInstagram /></a>
-            <a href="#" className="text-white hover:text-white/70" aria-label="TikTok"><IconTikTok /></a>
-            <a href="#" className="text-white hover:text-white/70" aria-label="Tumblr"><IconTumblr /></a>
-            <a href="#" className="text-white hover:text-white/70" aria-label="YouTube"><IconYouTube /></a>
+            <a href="#" className="social__link" aria-label="Twitter"><IconTwitter /></a>
+            <a href="#" className="social__link" aria-label="Facebook"><IconFacebook /></a>
+            <a href="#" className="social__link" aria-label="Pinterest"><IconPinterest /></a>
+            <a href="#" className="social__link" aria-label="Instagram"><IconInstagram /></a>
+            <a href="#" className="social__link" aria-label="TikTok"><IconTikTok /></a>
+            <a href="#" className="social__link" aria-label="Tumblr"><IconTumblr /></a>
+            <a href="#" className="social__link" aria-label="YouTube"><IconYouTube /></a>
           </div>
         </div>
       </div>

@@ -86,3 +86,12 @@ npm i react-router-dom
 # API
 # install graphQL
 npm install graphql graphql-request
+
+
+# Field of Article (this can see all the properties/attribute)
+{
+  __type(name: "Article") {
+    name
+    fields { name }
+  }
+}

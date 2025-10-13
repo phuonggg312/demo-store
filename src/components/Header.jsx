@@ -71,11 +71,11 @@ export default function Header() {
 
           {/* desktop nav */}
           <nav className="hidden md:flex items-center gap-6">
-            <Link to="/collections/men"     className={"text-sm hover:underline font-medium hover:text-gray-600 " + (isActiveQ("men") ? "text-black" : "text-gray-900")}>Men</Link>
-            <Link to="/collections/women"   className={"text-sm hover:underline font-medium hover:text-gray-600 " + (isActiveQ("women") ? "text-black" : "text-gray-900")}>Women</Link>
-            <Link to="/collections/unisex"  className={"text-sm hover:underline font-medium hover:text-gray-600 " + (isActiveQ("unisex") ? "text-black" : "text-gray-900")}>Unisex</Link>
-            <Link to="/collections"         className={"text-sm hover:underline font-medium hover:text-gray-600 " + (isActiveQ("collections") ? "text-black" : "text-gray-900")}>Collections</Link>
-            <Link to="/blogs/news"          className="text-sm hover:underline font-medium text-gray-900 hover:text-gray-600">News</Link>
+            <Link to="/collections/men"         className={`nav__link ${isActiveQ('men') ? 'text-black' : 'text-gray-900'}`}>Men</Link>
+            <Link to="/collections/women"   className={`nav__link ${isActiveQ('women') ? 'text-black' : 'text-gray-900'}`}>Women</Link>
+            <Link to="/collections/unisex"  className={`nav__link ${isActiveQ('unisex') ? 'text-black': 'text-gray-900'}`}>Unisex</Link>
+            <Link to="/collections"         className={`nav__link ${isActiveQ('collections') ? 'text-black' : 'text-gray-900'}`}>Collections</Link>
+            <Link to="/blogs/news"          className="nav__link">News</Link>
           </nav>
         </div>
 
@@ -121,11 +121,11 @@ export default function Header() {
             </button>
 
             <nav className="flex flex-col gap-6 px-8 pt-24 pb-8">
-              <Link to="/collections/men"    className="text-2xl text-gray-900 hover:text-gray-600" onClick={() => setOpen(false)}>Men</Link>
-              <Link to="/collections/women"  className="text-2xl text-gray-900 hover:text-gray-600" onClick={() => setOpen(false)}>Women</Link>
-              <Link to="/collections/unisex" className="text-2xl text-gray-900 hover:text-gray-600" onClick={() => setOpen(false)}>Unisex</Link>
-              <Link to="/collections"        className="text-2xl text-gray-900 hover:text-gray-600" onClick={() => setOpen(false)}>Collections</Link>
-              <Link to="/blogs/news"         className="text-2xl text-gray-900 hover:text-gray-600" onClick={() => setOpen(false)}>News</Link>
+              <Link to="/collections/men"    className="nav__link--mb" onClick={() => setOpen(false)}>Men</Link>
+              <Link to="/collections/women"  className="nav__link--mb" onClick={() => setOpen(false)}>Women</Link>
+              <Link to="/collections/unisex" className="nav__link--mb" onClick={() => setOpen(false)}>Unisex</Link>
+              <Link to="/collections"        className="nav__link--mb" onClick={() => setOpen(false)}>Collections</Link>
+              <Link to="/blogs/news"         className="nav__link--mb" onClick={() => setOpen(false)}>News</Link>
             </nav>
 
             <div className="px-8 py-8 bg-[#f5f5f5]">
@@ -134,10 +134,10 @@ export default function Header() {
                 <span>Log in</span>
               </Link>
               <div className="flex items-center gap-5 text-xl">
-                <a href="#" className="text-gray-900 hover:text-gray-600" aria-label="Twitter"><i className="fa-brands fa-x-twitter" /></a>
-                <a href="#" className="text-gray-900 hover:text-gray-600" aria-label="Facebook"><i className="fa-brands fa-facebook" /></a>
-                <a href="#" className="text-gray-900 hover:text-gray-600" aria-label="Instagram"><i className="fa-brands fa-instagram" /></a>
-                <a href="#" className="text-gray-900 hover:text-gray-600" aria-label="YouTube"><i className="fa-brands fa-youtube" /></a>
+                <a href="#" className="social__link--mb" aria-label="Twitter"><i className="fa-brands fa-x-twitter" /></a>
+                <a href="#" className="social__link--mb" aria-label="Facebook"><i className="fa-brands fa-facebook" /></a>
+                <a href="#" className="social__link--mb" aria-label="Instagram"><i className="fa-brands fa-instagram" /></a>
+                <a href="#" className="social__link--mb" aria-label="YouTube"><i className="fa-brands fa-youtube" /></a>
               </div>
             </div>
           </div>
