@@ -41,8 +41,7 @@ export default function AllCollections() {
                 <h1 className="text-3xl md:text-5xl font-black text-gray-900 mb-6 md:mb-10">
                     Collections
                 </h1>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {items.map(c => (
                         <Link key={c.id} to={`/collections/${c.handle}`} className="block group relative">
                             <div className="aspect-square bg-[#efefef] rounded-lg overflow-hidden">

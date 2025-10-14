@@ -1,97 +1,66 @@
-# React + Vite
+# Demo Store 🛍️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![GraphQL](https://img.shields.io/badge/-GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white)
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project is a modern, responsive e-commerce storefront built with React and Vite. It showcases a clean design and smooth user experience for browsing products, viewing product details, and managing a shopping cart. The project fetches data from a mock e-commerce API using GraphQL.
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Product Listings:** Browse products by category (Men, Women, Unisex).
+- **Product Details Page:** View detailed information about each product, including multiple images, price, and description.
+- **Image Zoom & Lightbox:** Hover to zoom in on product images and click to view them in a full-screen lightbox.
+- **Interactive Header:** The header hides on scroll-down and reappears on scroll-up for a better viewing experience.
+- **Responsive Design:** Fully responsive layout that works on desktops, tablets, and mobile devices.
+- **GraphQL Integration:** Fetches product data efficiently using GraphQL queries.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend:**
+  - [React]
+  - [Vite]
+  - [React Router]
+- **Styling:**
+  - [Tailwind CSS]
+  - [SCSS]
+- **API:**
+  - [GraphQL](const endpoint = "https://mock.shop/api";)
+  - [graphql-request](https://github.com/prisma-labs/graphql-request)
 
+## Demo Link
 
-## 1) Create Project (or move into the target folder)
+Website (Cloudflare Pages): https://demo-store-cuc.pages.dev/
 
-```powershell
-cd "C:\Users\ADMIN\OneDrive\Documents\workspace"
+## Installation
 
-# Create with Vite
-npm create vite@latest demo-store -- --template react
-cd .\demo-store
+To get a local copy up and running, follow these simple steps.
 
-# Install base deps
-npm i
-```
+### Prerequisites
 
-> If you already created the project elsewhere, copy it here:
-> ```powershell
-> robocopy "D:\code\demo-store" "C:\Users\ADMIN\OneDrive\Documents\workspace\demo-store" /MIR
-> ```
+- Node.js (v18 or later recommended)
+- npm
 
----
+### Steps
 
-## 2) Install Tailwind v3 + PostCSS + Autoprefixer + SCSS
+1.  **Clone the repository:**
+    ```sh
+    git clone https://github.com/phuonggg312/demo-store.git
+    ```
+2.  **Navigate to the project directory:**
+    ```sh
+    cd demo-store
+    ```
+3.  **Install dependencies:**
+    ```sh
+    npm install
+    ```
+4.  **Run the development server:**
+    ```sh
+    npm run dev
+    ```
+The application will be available at `http://localhost:5173`.
 
-We **pin Tailwind v3** because it ships with a CLI out-of-the-box and works smoothly with Vite + SCSS.
-
-```powershell
-# Remove any previous tailwind if needed
-npm remove tailwindcss
-
-# Install stable Tailwind v3 with CLI + PostCSS + Autoprefixer + Sass
-npm i -D tailwindcss@3.4.13 postcss@latest autoprefixer@latest sass
-
-# Initialize configs (Tailwind + PostCSS)
-npx tailwindcss init -p
-```
-
-If `npx tailwindcss init -p` fails with
-`npm ERR! could not determine executable to run`, use one of:
-```powershell
-.\node_modules\.bin\tailwindcss.cmd init -p
-npm exec tailwindcss init -p
-node .\node_modules\tailwindcss\lib\cli.js init -p
-```
-
-**Update `tailwind.config.js`:**
-```js
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx,scss}"],
-  theme: { extend: {} },
-  plugins: [],
-};
-```
-
-**`postcss.config.js`** (auto-created by the init above; keep it as:)
-```js
-export default {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-};
-```
-
----
-# install React Router
-npm i react-router-dom
-
-# API
-# install graphQL
-npm install graphql graphql-request
-
-
-# Field of Article (this can see all the properties/attribute)
-{
-  __type(name: "Article") {
-    name
-    fields { name }
-  }
-}

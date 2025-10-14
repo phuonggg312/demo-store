@@ -26,8 +26,10 @@ function IconMenu() {
 }
 
 export default function Header() {
-  const [open, setOpen] = useState(false);      
-  const [scrolled, setScrolled] = useState(false); 
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const location = useLocation();
 
   const params = new URLSearchParams(location.search);
@@ -41,11 +43,18 @@ export default function Header() {
 
   useEffect(() => {
     function onScroll() {
-      setScrolled(window.scrollY > 10);
+      const currentScrollY = window.scrollY;
+      setScrolled(currentScrollY > 10);
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+      setLastScrollY(currentScrollY);
     }
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [lastScrollY]);
 
   function isActiveQ(name) {
     return onCollections && q === name;
@@ -53,10 +62,9 @@ export default function Header() {
 
   return (
     <header
-      className={
-        "sticky top-0 z-50 bg-white border-b border-gray-200 pt-[18px] pb-[14px] " +
-        (scrolled ? "shadow-[0_2px_8px_rgba(0,0,0,0.08)]" : "")
-      }
+      className={`sticky top-0 z-50 bg-white border-b border-gray-200 pt-[18px] pb-[14px] transition-transform duration-300 ${
+        scrolled ? "shadow-[0_2px_8px_rgba(0,0,0,0.08)]" : ""
+      } ${hidden ? "-translate-y-full" : ""}`}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-6 grid grid-cols-3 items-center">
         <div className="flex items-center gap-6">

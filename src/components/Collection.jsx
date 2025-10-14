@@ -44,7 +44,6 @@ export default function CollectionPage() {
                 <h1 className="text-3xl md:text-5xl font-black text-gray-900 mb-6 md:mb-10">
                     {title}
                 </h1>
-
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
                     {items.map((p) => {
                         const img = p.featuredImage?.url;
@@ -60,7 +59,6 @@ export default function CollectionPage() {
                                             src={img}
                                             alt={p.title}
                                             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                                            loading="lazy"
                                         />
                                     )}
                                 </div>

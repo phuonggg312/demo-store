@@ -3,13 +3,16 @@
     .social__link {
         @apply text-white hover:text-white/70;
     }
-.social__link--mb{
-    @apply text-gray-900 hover:text-gray-600;
-}
+
+    .social__link--mb {
+        @apply text-gray-900 hover:text-gray-600;
+    }
+
     .nav__link {
         @apply text-sm font-medium hover:underline text-gray-900 hover:text-gray-600;
     }
-    .nav__link--mb{
+
+    .nav__link--mb {
         @apply text-2xl text-gray-900 hover:text-gray-600;
     }
 

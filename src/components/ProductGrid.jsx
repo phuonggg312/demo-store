@@ -36,7 +36,7 @@ export default function ProductGrid() {
     <section className="py-12 px-4 bg-[#f3f3f3]">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
-          <p className="text-xs uppercase tracking-wide text-gray-600">
+          <p className="text-xs tracking-wide text-gray-600">
             New arrivals
           </p>
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
