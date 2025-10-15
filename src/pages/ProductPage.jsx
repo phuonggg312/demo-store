@@ -9,10 +9,11 @@ const PRODUCT_QUERY = gql`
       title
       description
       priceRange { minVariantPrice { amount currencyCode } }
-      images(first: 5) {
+      images(first: 50) {
         edges {
           node {
             url
+            altText
           }
         }
       }
@@ -26,6 +27,9 @@ const PRODUCT_QUERY = gql`
             id
             title
             availableForSale
+            image {
+              url
+            }
             selectedOptions {
               name
               value
@@ -59,8 +63,11 @@ export default function ProductPage() {
   const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState({});
+  const [currentVariantImages, setCurrentVariantImages] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -69,7 +76,43 @@ export default function ProductPage() {
       request("https://mock.shop/api", RECOMMENDED_PRODUCTS_QUERY),
     ])
       .then(([productData, recommendedData]) => {
-        setProduct(productData.product);
+        const prod = productData.product;
+        setProduct(prod);
+
+        const defaultOptions = {};
+        prod.options?.forEach(option => {
+          if (option.values && option.values.length > 0) {
+            defaultOptions[option.name] = option.values[0];
+          }
+        });
+        setSelectedOptions(defaultOptions);
+
+        if (defaultOptions.Color) {
+          const colorMapping = {
+            'Olive': 'Clay',
+            'Green': 'Green',
+            'Ocean': 'Ocean',
+            'Purple': 'Purple',
+            'Red': 'Red',
+          };
+          
+          const urlColorName = colorMapping[defaultOptions.Color] || defaultOptions.Color;
+          
+          const allImages = prod.images?.edges || [];
+          const colorImages = allImages
+            .filter(edge => {
+              const url = edge.node.url;
+              return url.toLowerCase().includes(urlColorName.toLowerCase());
+            })
+            .map(edge => edge.node.url);
+          
+          if (colorImages.length > 0) {
+            setCurrentVariantImages(colorImages);
+          } else {
+            setCurrentVariantImages(allImages.slice(0, 5).map(e => e.node.url));
+          }
+        }
+        
         const list = recommendedData?.products?.edges?.map((e) => e.node) || [];
         setRecommendedProducts(list);
         setLoading(false);
@@ -88,14 +131,6 @@ export default function ProductPage() {
     );
   }
 
-  if (!product) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-500">Product not found</p>
-      </div>
-    );
-  }
-
   const images = product.images?.edges?.map((e) => e.node.url) || [];
   const price = product.priceRange?.minVariantPrice;
   const productOptions = product.options || [];
@@ -105,26 +140,68 @@ export default function ProductPage() {
       ...prev,
       [optionName]: value
     }));
+    
+    if (optionName === 'Color') {
+      const colorMapping = {
+        'Olive': 'Clay',
+        'Green': 'Green',
+        'Ocean': 'Ocean',
+        'Purple': 'Purple',
+        'Red': 'Red',
+      };
+      
+      const urlColorName = colorMapping[value] || value;
+      
+      const allImages = product.images?.edges || [];
+      const colorImages = allImages
+        .filter(edge => {
+          const url = edge.node.url;
+          return url.toLowerCase().includes(urlColorName.toLowerCase());
+        })
+        .map(edge => edge.node.url);
+      
+      if (colorImages.length > 0) {
+        setCurrentVariantImages(colorImages);
+        setSelectedImage(0);
+      } else {
+        const colorVariants = product.variants?.edges.filter(e => 
+          e.node.selectedOptions?.some(opt => 
+            opt.name === 'Color' && opt.value === value
+          )
+        );
+        
+        const variantImageUrls = colorVariants
+          ?.map(e => e.node.image?.url)
+          .filter(url => url);
+        
+        const uniqueImages = [...new Set(variantImageUrls)];
+        
+        if (uniqueImages.length > 0) {
+          setCurrentVariantImages(uniqueImages);
+          setSelectedImage(0);
+        }
+      }
+    }
   };
-  const getColorClass = (colorName) => {
+  const getColorStyle = (colorName) => {
     const colorMap = {
-      'Green': 'bg-green-700',
-      'Blue': 'bg-blue-700',
-      'Red': 'bg-red-700',
-      'Black': 'bg-gray-900',
-      'White': 'bg-white border-gray-300',
-      'Yellow': 'bg-yellow-500',
-      'Pink': 'bg-pink-500',
-      'Purple': 'bg-purple-700',
-      'Orange': 'bg-orange-500',
-      'Gray': 'bg-gray-500',
-      'Brown': 'bg-amber-700',
-      'Navy': 'bg-blue-900',
-      'Beige': 'bg-amber-100',
-      'Olive': 'bg-green-600',
-      'Burgundy': 'bg-red-900',
+      'Green': '#2d5f3f',
+      'Red': '#6e3e4c',
+      'Purple': '#3a3159',
+      'Olive': '#726948',
+      'Ocean': '#2a5259',
+      'Clay': '#9b8579',
     };
-    return colorMap[colorName];
+    return colorMap[colorName] || '#9ca3af';
+  };
+
+  const openLightbox = (index) => {
+    setLightboxImage(index);
+    setIsLightboxOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setIsLightboxOpen(false);
   };
 
 
@@ -133,28 +210,30 @@ export default function ProductPage() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-[1.7fr_1fr] gap-12">
           <div className="space-y-4 ">
-            <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+            <div 
+              className="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer"
+              onClick={() => openLightbox(0)}
+            >
               <img
-                src={images[selectedImage] || images[0]}
+                src={currentVariantImages[0] || images[0]}
                 alt={product.title}
                 className="w-full h-full object-cover"
+                loading="eager"
               />
             </div>
-            {images.length > 1 && (
+            {currentVariantImages.length > 1 && (
               <div className="grid grid-cols-2 gap-4">
-                {images.slice(0, 2).map((img, idx) => (
+                {currentVariantImages.slice(1, 3).map((img, idx) => (
                   <button
                     key={idx}
-                    onClick={() => setSelectedImage(idx)}
-                    className={`aspect-square bg-gray-100 rounded-lg overflow-hidden ${
-                      selectedImage === idx
-                    
-                    }`}
+                    onClick={() => openLightbox(idx + 1)}
+                    className="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer"
                   >
                     <img
                       src={img}
-                      alt={`${product.title} ${idx + 1}`}
+                      alt={`${product.title} ${idx + 2}`}
                       className="w-full h-full object-cover"
+                      loading="eager"
                     />
                   </button>
                 ))}
@@ -200,14 +279,15 @@ export default function ProductPage() {
                     {selectedValue && ` : ${selectedValue}`}
                   </label>
                  
-                  {isColorOption ? (-
+                  {isColorOption ? (
                     <div className="flex flex-wrap gap-2">
                       {optionValues.map((value) => (
                         <button
                           key={value}
                           onClick={() => handleOptionChange(optionName, value)}
+                          style={{ backgroundColor: getColorStyle(value) }}
                           className={`w-10 h-10 rounded-full border-2 transition-all ${
-                            getColorClass(value)
+                            value === 'White' ? 'border-gray-300' : ''
                           } ${
                             selectedValue === value
                               ? "border-gray-900 ring-2 ring-offset-2 ring-gray-900"
@@ -315,6 +395,56 @@ export default function ProductPage() {
           </div>
         )}
       </div>
+
+      {isLightboxOpen && (
+        <div 
+          className="fixed inset-0 bg-[#f3f3f3] z-50 flex items-center justify-center cursor-zoom-out"
+          onClick={closeLightbox}
+        >
+          <div 
+            className="relative w-full h-full overflow-y-auto py-8"
+            style={{
+              msOverflowStyle: 'none',
+              scrollbarWidth: 'none',
+              WebkitOverflowScrolling: 'touch'
+            }}
+          >
+            <style>{`
+              .relative.w-full.h-full.overflow-y-auto::-webkit-scrollbar {
+                display: none;
+              }
+            `}</style>
+            <div className="max-w-4xl mx-auto px-4 space-y-8">
+              {(() => {
+                const displayImages = currentVariantImages.length > 0 ? currentVariantImages : images;
+                const reorderedImages = [
+                  displayImages[lightboxImage],
+                  ...displayImages.slice(0, lightboxImage),
+                  ...displayImages.slice(lightboxImage + 1)
+                ];
+                
+                return reorderedImages.map((img, idx) => (
+                  <div key={idx} className="w-full">
+                    <img
+                      src={img}
+                      alt={`${product.title} ${idx + 1}`}
+                      className="w-full h-auto object-contain"
+                    />
+                  </div>
+                ));
+              })()}
+            </div>
+          </div>
+          
+          <button
+            onClick={closeLightbox}
+            className="fixed top-4 right-4 text-gray-900 text-4xl hover:text-gray-600 transition-colors z-10"
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </div>
+      )}
     </div>
   );
 }
