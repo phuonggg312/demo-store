@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { request, gql } from "graphql-request";
+import { optimizeShopifyImage, generateSrcSet } from "../utils/imageOptimizer";
 
 const PRODUCT_QUERY = gql`
   query GetProduct($handle: String!) {
@@ -215,7 +216,9 @@ export default function ProductPage() {
               onClick={() => openLightbox(0)}
             >
               <img
-                src={currentVariantImages[0] || images[0]}
+                src={optimizeShopifyImage(currentVariantImages[0] || images[0], 800)}
+                srcSet={generateSrcSet(currentVariantImages[0] || images[0])}
+                sizes="(max-width: 768px) 100vw, 50vw"
                 alt={product.title}
                 className="w-full h-full object-cover"
                 loading="eager"
@@ -233,7 +236,9 @@ export default function ProductPage() {
                     className="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer"
                   >
                     <img
-                      src={img}
+                      src={optimizeShopifyImage(img, 400)}
+                      srcSet={generateSrcSet(img)}
+                      sizes="(max-width: 768px) 50vw, 25vw"
                       alt={`${product.title} ${idx + 2}`}
                       className="w-full h-full object-cover"
                       loading="lazy"
@@ -380,7 +385,9 @@ export default function ProductPage() {
                   >
                     <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden mb-3">
                       <img
-                        src={img}
+                        src={optimizeShopifyImage(img, 300)}
+                        srcSet={generateSrcSet(img)}
+                        sizes="(max-width: 768px) 50vw, 25vw"
                         alt={p.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         loading="lazy"
@@ -434,7 +441,9 @@ export default function ProductPage() {
                 return reorderedImages.map((img, idx) => (
                   <div key={idx} className="w-full">
                     <img
-                      src={img}
+                      src={optimizeShopifyImage(img, 1200)}
+                      srcSet={generateSrcSet(img)}
+                      sizes="(max-width: 768px) 100vw, 1200px"
                       alt={`${product.title} ${idx + 1}`}
                       className="w-full h-auto object-contain"
                       loading={idx === 0 ? "eager" : "lazy"}

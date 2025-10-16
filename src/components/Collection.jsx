@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { request, gql } from "graphql-request";
+import { optimizeShopifyImage, generateSrcSet } from "../utils/imageOptimizer";
 
 const API = "https://mock.shop/api";
 
@@ -56,7 +57,9 @@ export default function CollectionPage() {
                                 <div className="aspect-square bg-[#efefef] overflow-hidden">
                                     {img && (
                                         <img
-                                            src={img}
+                                            src={optimizeShopifyImage(img, 400)}
+                                            srcSet={generateSrcSet(img)}
+                                            sizes="(max-width: 768px) 50vw, 33vw"
                                             alt={p.title}
                                             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                                             loading="lazy"
