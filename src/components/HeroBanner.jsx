@@ -3,18 +3,17 @@ import { Link } from "react-router-dom";
 export default function HeroBanner() {
   return (
     <section
-      className="
-        relative w-full
-        min-h-[500px] md:min-h-[600px]
-        bg-cover bg-center bg-no-repeat
-        flex items-center justify-center
-      "
-      style={{
-        backgroundImage:
-          "url('https://demostore.mock.shop/cdn/shop/files/second.jpg?v=1675442050&width=1500')",
-      }}
+      className="relative w-full min-h-[500px] md:min-h-[600px] flex items-center justify-center overflow-hidden"
       aria-label="Midweight classics"
     >
+      <img
+        src="https://demostore.mock.shop/cdn/shop/files/second.jpg?v=1675442050&width=1500"
+        alt="Midweight classics"
+        className="absolute inset-0 w-full h-full object-cover"
+        loading="lazy"
+        width="1500"
+        height="600"
+      />
       <div className="absolute inset-0 bg-black/0 md:bg-black/0" />
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-6">

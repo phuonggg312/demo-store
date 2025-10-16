@@ -93,6 +93,9 @@ export default function Header() {
             alt="DemoStore"
             className="h-12 md:h-16"
             loading="eager"
+            width="200"
+            height="64"
+            fetchpriority="high"
           />
         </Link>
 

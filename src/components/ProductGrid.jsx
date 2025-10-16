@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { request, gql } from "graphql-request";
+import { optimizeShopifyImage, generateSrcSet } from "../utils/imageOptimizer";
 
 const PRODUCTS_QUERY = gql`
   query GetProducts {
@@ -56,14 +57,16 @@ export default function ProductGrid() {
                 className="block overflow-hidden"
               >
                 <div className="aspect-square bg-gray-200 overflow-hidden">
-                 
                     <img
-                      src={img}
+                      src={optimizeShopifyImage(img, 400)}
+                      srcSet={generateSrcSet(img)}
+                      sizes="(max-width: 768px) 100vw, 33vw"
                       alt={p.title}
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                       loading="lazy"
+                      width="400"
+                      height="400"
                     />
-               
                 </div>
 
                 <div className="p-[14px]">
