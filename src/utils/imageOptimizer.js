@@ -1,5 +1,4 @@
 /**
- * Optimize Shopify CDN images by adding size parameters
  * @param {string} url - Original image URL
  * @param {number} width - Desired width
  * @returns {string} Optimized image URL
@@ -7,17 +6,17 @@
 export function optimizeShopifyImage(url, width = 800) {
   if (!url) return url;
   
-  // Check if it's a Shopify CDN URL
-  if (url.includes('cdn.shopify.com')) {
-    // Remove existing size parameters
-    const baseUrl = url.split('?')[0];
+  // Check if it's a Shopify CDN URL or mock.shop URL
+  if (url.includes('cdn.shopify.com') || url.includes('mock.shop')) {
+    // Check if URL already has width parameter
+    if (url.includes('width=')) {
+      // Replace existing width parameter
+      return url.replace(/width=\d+/, `width=${width}`);
+    }
     
-    // Add optimized size parameter
-    // Format: _800x (width constraint, auto height)
-    const extension = baseUrl.substring(baseUrl.lastIndexOf('.'));
-    const urlWithoutExt = baseUrl.substring(0, baseUrl.lastIndexOf('.'));
-    
-    return `${urlWithoutExt}_${width}x${extension}`;
+    // Add width parameter
+    const separator = url.includes('?') ? '&' : '?';
+    return `${url}${separator}width=${width}`;
   }
   
   return url;
@@ -28,7 +27,8 @@ export function optimizeShopifyImage(url, width = 800) {
  * @returns {string} 
  */
 export function generateSrcSet(url) {
-  if (!url || !url.includes('cdn.shopify.com')) return '';
+  if (!url) return '';
+  if (!url.includes('cdn.shopify.com') && !url.includes('mock.shop')) return '';
   
   const sizes = [400, 600, 800, 1200];
   return sizes
