@@ -49,6 +49,9 @@ export default function CollectionPage() {
                     {items.map((p, index) => {
                         const img = p.featuredImage?.url;
                         const price = p.priceRange?.minVariantPrice;
+                        // Desktop: 3 columns, so first 3 images should be eager
+                        // Mobile: 1 column, so only first image eager
+                        const isFirstRow = index < 3;
                         const isFirstImage = index === 0;
                         return (
                             <Link
@@ -63,8 +66,8 @@ export default function CollectionPage() {
                                             sizes="(max-width: 768px) 50vw, 33vw"
                                             alt={p.title}
                                             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                                            loading={isFirstImage ? "eager" : "lazy"}
-                                            fetchPriority={isFirstImage ? "high" : undefined}
+                                            loading={isFirstRow ? "eager" : "lazy"}
+                                            fetchPriority={isFirstImage ? "high" : isFirstRow ? "high" : undefined}
                                             width="400"
                                             height="400"
                                         />
