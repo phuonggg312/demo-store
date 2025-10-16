@@ -46,9 +46,10 @@ export default function ProductGrid() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-          {products.map((p) => {
+          {products.map((p, index) => {
             const img = p.featuredImage?.url;
             const price = p.priceRange?.minVariantPrice;
+            const isFirstImage = index === 0;
 
             return (
               <Link
@@ -63,7 +64,8 @@ export default function ProductGrid() {
                       sizes="(max-width: 768px) 100vw, 33vw"
                       alt={p.title}
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
+                      loading={isFirstImage ? "eager" : "lazy"}
+                      fetchPriority={isFirstImage ? "high" : undefined}
                       width="400"
                       height="400"
                     />
