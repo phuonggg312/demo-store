@@ -219,6 +219,9 @@ export default function ProductPage() {
                 alt={product.title}
                 className="w-full h-full object-cover"
                 loading="eager"
+                fetchpriority="high"
+                width="800"
+                height="800"
               />
             </div>
             {currentVariantImages.length > 1 && (
@@ -233,7 +236,9 @@ export default function ProductPage() {
                       src={img}
                       alt={`${product.title} ${idx + 2}`}
                       className="w-full h-full object-cover"
-                      loading="eager"
+                      loading="lazy"
+                      width="400"
+                      height="400"
                     />
                   </button>
                 ))}
@@ -378,6 +383,9 @@ export default function ProductPage() {
                         src={img}
                         alt={p.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                        width="300"
+                        height="300"
                       />
                     </div>
                     <h3 className="text-sm font-medium text-gray-900 mb-1">
@@ -429,6 +437,9 @@ export default function ProductPage() {
                       src={img}
                       alt={`${product.title} ${idx + 1}`}
                       className="w-full h-auto object-contain"
+                      loading={idx === 0 ? "eager" : "lazy"}
+                      width="1200"
+                      height="1200"
                     />
                   </div>
                 ));

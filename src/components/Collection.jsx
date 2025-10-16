@@ -59,6 +59,9 @@ export default function CollectionPage() {
                                             src={img}
                                             alt={p.title}
                                             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                                            loading="lazy"
+                                            width="400"
+                                            height="400"
                                         />
                                     )}
                                 </div>

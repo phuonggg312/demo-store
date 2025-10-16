@@ -79,3 +79,5 @@ Follow these steps to set up and run the project on your local machine.
     npm run dev
     ```
     The application will now be running and accessible at `http://localhost:5173`.
+    # install terser minify code
+    - npm install -D terser
