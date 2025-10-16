@@ -53,7 +53,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="mt-auto">
+    <footer className="mt-auto" style={{ minHeight: '400px' }}>
       <div className="bg-black text-white py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 md:px-6 text-center">
           <h2 className="text-3xl md:text-5xl font-bold mb-8 md:mb-10 tracking-[0.02em]"
@@ -103,6 +103,7 @@ export default function Footer() {
               </label>
               <select
                 className="bg-transparent border border-white/30 px-4 py-2 text-white text-sm focus:outline-none focus:border-white cursor-pointer"
+                style={{ minHeight: '40px', minWidth: '180px' }}
               >
                 <option className="text-black">Canada (CAD $)</option>
                 <option className="text-black">United States (USD $)</option>
@@ -116,6 +117,7 @@ export default function Footer() {
               </label>
               <select
                 className="bg-transparent border border-white/30 px-4 py-2 text-white text-sm focus:outline-none focus:border-white cursor-pointer"
+                style={{ minHeight: '40px', minWidth: '120px' }}
               >
                 <option className="text-black">English</option>
                 <option className="text-black">Français</option>
