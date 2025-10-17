@@ -1,7 +1,7 @@
+@use "./components";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@use "./components";
 
 .header {
   @apply bg-white/80 backdrop-blur sticky top-0 z-50;
