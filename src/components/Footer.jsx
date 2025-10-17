@@ -53,7 +53,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="mt-auto" style={{ minHeight: '400px' }}>
+    <footer className="mt-auto">
       <div className="bg-black text-white py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 md:px-6 text-center">
           <h2 className="text-3xl md:text-5xl font-bold mb-8 md:mb-10 tracking-[0.02em]"
