@@ -34,7 +34,7 @@ const QUERY = gql`
 export default function CollectionPage() {
     const { handle } = useParams();          
     const [items, setItems] = useState([]);
-    const [title, setTitle] = useState(handle || "");
+
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -68,7 +68,7 @@ export default function CollectionPage() {
                     {loading ? (
                         // Skeleton loading with prioritize LCP for first item 
                         Array.from({ length: 12 }).map((_, index) => {
-                            const isFirstSkeleton = index === 0; 
+                            const isFirstSkeleton = index === 0;    const [title, setTitle] = useState(handle || ""); 
                             return (
                                 <div key={index} className="block overflow-hidden animate-pulse">
                                     <div className={`aspect-square overflow-hidden ${isFirstSkeleton ? 'bg-gray-200' : 'bg-gray-300'}`}></div>
