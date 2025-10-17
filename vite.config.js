@@ -10,20 +10,15 @@ export default defineConfig({
       compress: {
         drop_console: true, 
         drop_debugger: true,
+        unused: true,
+        dead_code: true,
       },
     },
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'graphql-vendor': ['graphql', 'graphql-request'],
-        },
+        manualChunks: undefined, // Để Vite tự động tối ưu
       },
     },
     chunkSizeWarningLimit: 1000,
-    cssCodeSplit: true,
-  },
-  optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', 'graphql-request'],
   },
 })
