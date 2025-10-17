@@ -6,17 +6,24 @@ import { optimizeShopifyImage, generateSrcSet } from "../utils/imageOptimizer";
 const API = "https://mock.shop/api";
 
 const QUERY = gql`
-  query ProductsByCollection($handle: String!, $first: Int!, $after: String) {
+  query ProductsByCollection($handle: String!, $first: Int!) {
     collection(handle: $handle) {
       title
-      products(first: $first, after: $after) {
+      products(first: $first) {
         edges {
           node {
             id
             title
             handle
-            featuredImage { url }
-            priceRange { minVariantPrice { amount currencyCode } }
+            featuredImage { 
+              url
+            }
+            priceRange { 
+              minVariantPrice { 
+                amount 
+                currencyCode 
+              } 
+            }
           }
         }
       }
@@ -27,12 +34,12 @@ const QUERY = gql`
 export default function CollectionPage() {
     const { handle } = useParams();          
     const [items, setItems] = useState([]);
-    const [title, setTitle] = useState("");
+    const [title, setTitle] = useState(handle || ""); // Hiển thị handle ngay lập tức
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
-        request(API, QUERY, { handle, first: 12, after: null })
+        request(API, QUERY, { handle, first: 12 })
             .then((data) => {
                 setTitle(data.collection?.title || handle);
                 const list = data.collection?.products?.edges?.map(e => e.node) || [];
