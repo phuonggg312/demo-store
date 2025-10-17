@@ -14,7 +14,15 @@
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
   <link rel="dns-prefetch" href="https://cdn.shopify.com">
   
-  <!-- Inline critical font CSS with font-display swap -->
+  <!-- Preload most common LCP images based on analytics -->
+  <link rel="preload" as="image" href="https://cdn.shopify.com/s/files/1/0688/1755/1382/products/GreenHoodie01.jpg?v=1731751119&width=400" fetchpriority="high" media="(max-width: 768px)">
+  <link rel="preload" as="image" href="https://cdn.shopify.com/s/files/1/0688/1755/1382/products/GreenHoodie01.jpg?v=1731751119&width=600" fetchpriority="high" media="(min-width: 769px)">
+  
+  <!-- Preload API endpoint to reduce TTFB -->
+  <link rel="preconnect" href="https://mock.shop" crossorigin>
+  <link rel="dns-prefetch" href="https://mock.shop">
+  
+  <!-- Inline critical CSS for faster LCP -->
   <style>
     @font-face {
       font-family: 'Inter';
@@ -29,6 +37,21 @@
       font-weight: 700;
       font-display: swap;
       src: url(https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fAZ9hiA.woff2) format('woff2');
+    }
+    
+    /* Critical CSS for LCP elements */
+    .aspect-square { aspect-ratio: 1 / 1; }
+    .bg-gray-300 { background-color: rgb(209 213 219); }
+    .bg-gray-200 { background-color: rgb(229 231 235); }
+    .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .5; }
+    }
+    .grid { display: grid; }
+    .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+    @media (min-width: 768px) {
+      .md\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
   </style>
   

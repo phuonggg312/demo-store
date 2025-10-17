@@ -39,22 +39,20 @@ export default function CollectionPage() {
 
     useEffect(() => {
         setLoading(true);
+        
+        // Start API call immediately without delay
+        const startTime = performance.now();
         request(API, QUERY, { handle, first: 12 })
             .then((data) => {
+                const endTime = performance.now();
+                console.log(`API call took: ${endTime - startTime}ms`);
+                
                 setTitle(data.collection?.title || handle);
                 const list = data.collection?.products?.edges?.map(e => e.node) || [];
                 setItems(list);
                 
-                // Chỉ preload ảnh LCP (ảnh đầu tiên)
-                if (list.length > 0 && list[0].featuredImage?.url) {
-                    const firstImageUrl = optimizeShopifyImage(list[0].featuredImage.url, 400);
-                    const link = document.createElement('link');
-                    link.rel = 'preload';
-                    link.as = 'image';
-                    link.href = firstImageUrl;
-                    link.fetchPriority = 'high';
-                    document.head.appendChild(link);
-                }
+                // Skip dynamic preload since we already preload common images in HTML
+                // This reduces JavaScript execution time
             })
             .catch((e) => console.error(e))
             .finally(() => setLoading(false));
