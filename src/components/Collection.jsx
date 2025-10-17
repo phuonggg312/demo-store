@@ -32,25 +32,51 @@ export default function CollectionPage() {
 
     useEffect(() => {
         setLoading(true);
-        request(API, QUERY, { handle, first: 12, after: null })
+        
+        // optimal request with timeout and cache headers
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
+        
+        request(API, QUERY, { handle, first: 12, after: null }, {
+            signal: controller.signal,
+            headers: {
+                'Cache-Control': 'max-age=300', // Cache 5 minute
+            }
+        })
             .then((data) => {
+                clearTimeout(timeoutId);
                 setTitle(data.collection?.title || handle);
                 const list = data.collection?.products?.edges?.map(e => e.node) || [];
                 setItems(list);
                 
-                // Preload picture LCP (first pic) 
-                if (list.length > 0 && list[0].featuredImage?.url) {
-                    const firstImageUrl = optimizeShopifyImage(list[0].featuredImage.url, 400);
-                    const link = document.createElement('link');
-                    link.rel = 'preload';
-                    link.as = 'image';
-                    link.href = firstImageUrl;
-                    link.fetchPriority = 'high';
-                    document.head.appendChild(link);
+                // Preload multiple images for better performance
+                if (list.length > 0) {
+                    // Preload first 3 images
+                    list.slice(0, 3).forEach((item, index) => {
+                        if (item.featuredImage?.url) {
+                            const imageUrl = optimizeShopifyImage(item.featuredImage.url, 400);
+                            const link = document.createElement('link');
+                            link.rel = 'preload';
+                            link.as = 'image';
+                            link.href = imageUrl;
+                            link.fetchPriority = index === 0 ? 'high' : 'low';
+                            document.head.appendChild(link);
+                        }
+                    });
                 }
             })
-            .catch((e) => console.error(e))
+            .catch((e) => {
+                clearTimeout(timeoutId);
+                if (e.name !== 'AbortError') {
+                    console.error(e);
+                }
+            })
             .finally(() => setLoading(false));
+            
+        return () => {
+            clearTimeout(timeoutId);
+            controller.abort();
+        };
     }, [handle]);
 
     return (
@@ -92,11 +118,17 @@ export default function CollectionPage() {
                                                 sizes="(max-width: 768px) 50vw, 33vw"
                                                 alt={p.title}
                                                 className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                                                loading={isFirstImage ? "eager" : "lazy"}
-                                                fetchPriority={isFirstImage ? "high" : "low"}
-                                                decoding={isFirstImage ? "sync" : "async"}
+                                                loading={index < 3 ? "eager" : "lazy"}
+                                                fetchPriority={index === 0 ? "high" : index < 3 ? "auto" : "low"}
+                                                decoding={index === 0 ? "sync" : "async"}
                                                 width="400"
                                                 height="400"
+                                                onLoad={index === 0 ? () => {
+                                                    // Mark LCP as loaded for performance tracking
+                                                    if (window.performance && window.performance.mark) {
+                                                        window.performance.mark('lcp-image-loaded');
+                                                    }
+                                                } : undefined}
                                             />
                                         )}
                                     </div>
