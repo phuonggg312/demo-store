@@ -1,0 +1,63 @@
+{
+  "title": "Women",
+  "products": [
+    {
+      "id": "gid://shopify/Product/7983591030806",
+      "title": "Women's Crewneck",
+      "handle": "women-crewneck",
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0688/1755/1382/products/GreenWomenscrew01.jpg?v=1675453375"
+      },
+      "priceRange": {
+        "minVariantPrice": {
+          "amount": "120.0",
+          "currencyCode": "CAD"
+        }
+      }
+    },
+    {
+      "id": "gid://shopify/Product/7983592374294",
+      "title": "Women's T-shirt",
+      "handle": "women-t-shirt",
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0688/1755/1382/products/GreenWomensTshirt01.jpg?v=1675463247"
+      },
+      "priceRange": {
+        "minVariantPrice": {
+          "amount": "40.0",
+          "currencyCode": "CAD"
+        }
+      }
+    },
+    {
+      "id": "gid://shopify/Product/7983594962966",
+      "title": "Workout Shirt",
+      "handle": "workout-shirt",
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0688/1755/1382/products/GreenWorkoutShirt.jpg?v=1675455464"
+      },
+      "priceRange": {
+        "minVariantPrice": {
+          "amount": "10.0",
+          "currencyCode": "CAD"
+        }
+      }
+    },
+    {
+      "id": "gid://shopify/Product/7983593422870",
+      "title": "Leggings",
+      "handle": "leggings",
+      "featuredImage": {
+        "url": "https://cdn.shopify.com/s/files/1/0688/1755/1382/products/GreenLeggings03.jpg?v=1675455256"
+      },
+      "priceRange": {
+        "minVariantPrice": {
+          "amount": "20.0",
+          "currencyCode": "CAD"
+        }
+      }
+    }
+  ],
+  "generatedAt": "2025-10-17T04:14:13.311Z",
+  "handle": "women"
+}
