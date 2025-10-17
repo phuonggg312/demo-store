@@ -67,7 +67,6 @@ button:focus-visible {
   }
 }
 
-/* Custom cursor styles for image zoom */
 .cursor-zoom-in {
   cursor: zoom-in;
 }
