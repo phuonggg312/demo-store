@@ -37,6 +37,17 @@ export default function CollectionPage() {
                 setTitle(data.collection?.title || handle);
                 const list = data.collection?.products?.edges?.map(e => e.node) || [];
                 setItems(list);
+                
+                // Preload picture LCP (first pic) 
+                if (list.length > 0 && list[0].featuredImage?.url) {
+                    const firstImageUrl = optimizeShopifyImage(list[0].featuredImage.url, 400);
+                    const link = document.createElement('link');
+                    link.rel = 'preload';
+                    link.as = 'image';
+                    link.href = firstImageUrl;
+                    link.fetchPriority = 'high';
+                    document.head.appendChild(link);
+                }
             })
             .catch((e) => console.error(e))
             .finally(() => setLoading(false));
@@ -50,16 +61,19 @@ export default function CollectionPage() {
                 </h1>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
                     {loading ? (
-                        // Skeleton loading 
-                        Array.from({ length: 12 }).map((_, index) => (
-                            <div key={index} className="block overflow-hidden animate-pulse">
-                                <div className="aspect-square bg-gray-300 overflow-hidden"></div>
-                                <div className="mt-3 space-y-2">
-                                    <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-                                    <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+                        // Skeleton loading with prioritize LCP for first item 
+                        Array.from({ length: 12 }).map((_, index) => {
+                            const isFirstSkeleton = index === 0;
+                            return (
+                                <div key={index} className="block overflow-hidden animate-pulse">
+                                    <div className={`aspect-square overflow-hidden ${isFirstSkeleton ? 'bg-gray-200' : 'bg-gray-300'}`}></div>
+                                    <div className="mt-3 space-y-2">
+                                        <div className={`h-4 rounded w-3/4 ${isFirstSkeleton ? 'bg-gray-200' : 'bg-gray-300'}`}></div>
+                                        <div className={`h-4 rounded w-1/2 ${isFirstSkeleton ? 'bg-gray-200' : 'bg-gray-300'}`}></div>
+                                    </div>
                                 </div>
-                            </div>
-                        ))
+                            );
+                        })
                     ) : (
                         items.map((p, index) => {
                             const img = p.featuredImage?.url;
@@ -79,7 +93,8 @@ export default function CollectionPage() {
                                                 alt={p.title}
                                                 className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                                                 loading={isFirstImage ? "eager" : "lazy"}
-                                                fetchPriority={isFirstImage ? "high" : undefined}
+                                                fetchPriority={isFirstImage ? "high" : "low"}
+                                                decoding={isFirstImage ? "sync" : "async"}
                                                 width="400"
                                                 height="400"
                                             />
