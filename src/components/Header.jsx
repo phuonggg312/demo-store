@@ -95,7 +95,7 @@ export default function Header() {
             loading="eager"
             width="200"
             height="64"
-            fetchpriority="high"
+            fetchPriority="high"
           />
         </Link>
 
