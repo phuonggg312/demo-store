@@ -5,7 +5,7 @@ import Footer from "./components/Footer.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const AllCollections = lazy(() => import("./pages/AllCollections.jsx"));
-const CollectionPage = lazy(() => import("./pages/CollectionPage.jsx"));
+const CollectionPage = lazy(() => import("./components/Collection.jsx"));
 const ProductPage = lazy(() => import("./pages/ProductPage.jsx"));
 
 const LoadingFallback = () => (
